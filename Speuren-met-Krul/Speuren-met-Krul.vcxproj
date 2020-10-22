@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CurlHandler.cpp" />
-    <ClCompile Include="src\Interpreter .cpp" />
+    <ClCompile Include="src\Interpreter.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -28,7 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CurlHandler.h" />
-    <ClInclude Include="src\Interpreter .h" />
+    <ClInclude Include="src\Interpreter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

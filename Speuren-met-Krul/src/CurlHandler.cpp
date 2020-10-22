@@ -1,8 +1,6 @@
-#include <string>
-#include <curl/curl.h>
 #include "CurlHandler.h"
-#include <iostream>
 
+//No idea what this does, got it from google.
 static size_t my_write(void* buffer, size_t size, size_t nmemb, void* param)
 {
 	std::string& text = *static_cast<std::string*>(param);
