@@ -12,6 +12,7 @@ public:
 	//constructor
 	Interpreter();
 
+	int lineCounter;
 	//3.1.1 Values & Types
 	std::string digits;
 	std::string text;
@@ -41,7 +42,7 @@ public:
 	std::string rotate(std::string value);
 	std::string newline(std::string value);
 
-	bool is_number(const std::string& s);
+	bool is_number(std::string s);
 	//3.1.4 Tests & Jumps
 
 
@@ -52,8 +53,9 @@ public:
 
 	//The stack(list) that holds the retrieved values from the curl website thingy
 	std::vector<std::string> stack;
-
+	std::vector<std::string> commands;
 	std::map<std::string, std::string> map;
+	std::map<std::string, std::string> labels;
 
 private:
 
