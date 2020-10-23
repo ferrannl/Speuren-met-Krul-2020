@@ -1,6 +1,5 @@
 #include "CurlHandler.h"
 
-//No idea what this does, got it from google.
 static size_t my_write(void* buffer, size_t size, size_t nmemb, void* param)
 {
 	std::string& text = *static_cast<std::string*>(param);
@@ -13,12 +12,15 @@ std::string CurlHandler::GetTextFile(const char* filename) {
 	std::string result;
 	CURL* curl;
 	CURLcode res;
-
+	const char baseUrl[] = "https://www.swiftcoder.nl/cpp1/";
+	char* fullUrl = new char[std::strlen(baseUrl) + std::strlen(filename) + 1];
+	std::strcpy(fullUrl, baseUrl);
+	std::strcat(fullUrl, filename);
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 
 	curl = curl_easy_init();
 	if (curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, filename);
+		curl_easy_setopt(curl, CURLOPT_URL, fullUrl);
 		/* Define our callback to get called when there's data to be written */
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, my_write);
 		/* Set a pointer to our struct to pass to the callback */

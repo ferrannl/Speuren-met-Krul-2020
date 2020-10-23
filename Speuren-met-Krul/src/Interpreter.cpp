@@ -69,7 +69,6 @@ void Interpreter::readLine(std::string line)
 		if (std::stoi(var1) != std::stoi(var2)) {
 
 		}
-
 	}
 	lineCounter++;
 }
@@ -128,3 +127,15 @@ bool Interpreter::is_number(std::string s)
 	return !s.empty() && std::find_if(s.begin(),
 		s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
 }
+
+void Interpreter::getLines(std::string value) {
+	std::stringstream stream(value);
+	std::string line;
+	while (stream.good()) {
+		std::getline(stream, line, '\n');
+		if (!line.empty()) {
+			commands.push_back(line);
+		}
+	}
+}
+

@@ -3,6 +3,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <sstream>
 
 class Interpreter {
 public:
@@ -43,6 +44,7 @@ public:
 	std::string newline(std::string value);
 
 	bool is_number(std::string s);
+	void getLines(std::string value);
 	//3.1.4 Tests & Jumps
 
 
