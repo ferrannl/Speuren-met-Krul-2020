@@ -7,7 +7,6 @@
 
 int main(int argc, char* argv[])
 {
-
 	const char startUrl[] = "start.txt";
 	auto curl_handler = std::make_unique<CurlHandler>();
 	auto curl_interpreter = std::make_unique<Interpreter>();

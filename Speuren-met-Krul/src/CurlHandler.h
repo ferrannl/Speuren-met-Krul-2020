@@ -11,5 +11,4 @@ public:
 	std::string GetTextFile(const char* filename);
 private:
 
-
 };

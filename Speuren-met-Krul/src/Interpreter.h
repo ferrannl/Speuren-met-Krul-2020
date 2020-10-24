@@ -64,7 +64,6 @@ public:
 	std::map<std::string, std::string> labels;
 
 private:
-	void set_end();
 	bool get_end();
 	bool _end;
 	std::vector<std::string> _commands;
@@ -74,5 +73,4 @@ private:
 	int get_currentLineCommand();
 	void set_lineCommands(std::vector<std::string> value);
 	std::string get_last();
-
 };
