@@ -13,7 +13,7 @@ public:
 	//constructor
 	Interpreter();
 
-	int lineCounter;
+	int currentLine;
 	//3.1.1 Values & Types
 	std::string digits;
 	std::string text;
@@ -45,20 +45,34 @@ public:
 
 	bool is_number(std::string s);
 	void getLines(std::string value);
+	void set_end();
+
+
+	std::string GetVariable(std::string keyValue);
+
+	void SetVariable(std::string keyValue, std::string value);
+
 	//3.1.4 Tests & Jumps
 
-
 	//3.1.5 Functies
-
 
 	//3.1.6 Eindoplossing
 
 	//The stack(list) that holds the retrieved values from the curl website thingy
 	std::vector<std::string> stack;
-	std::vector<std::string> commands;
 	std::map<std::string, std::string> map;
 	std::map<std::string, std::string> labels;
 
 private:
+	void set_end();
+	bool get_end();
+	bool _end;
+	std::vector<std::string> _commands;
+	void checkLabelDefinitions();
+	void RunNextLine();
+	std::vector<std::string> get_lineCommands();
+	int get_currentLineCommand();
+	void set_lineCommands(std::vector<std::string> value);
+	std::string get_last();
 
 };

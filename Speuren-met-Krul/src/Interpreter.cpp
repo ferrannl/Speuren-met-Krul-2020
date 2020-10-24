@@ -4,8 +4,9 @@ Interpreter::Interpreter() {
 	stack = std::vector<std::string>();
 	map = std::map<std::string, std::string>();
 	labels = std::map<std::string, std::string>();
-	commands = std::vector<std::string>();
-	lineCounter = 0;
+	_commands = std::vector<std::string>();
+	currentLine = 0;
+	_end = false;
 }
 
 // push_back	=		waarde toevoegen aan einde
@@ -14,6 +15,9 @@ Interpreter::Interpreter() {
 
 void Interpreter::readLine(std::string line)
 {
+	if (line.empty()) {
+		return;
+	}
 	if (line.find("\\") != std::string::npos) {
 		stack.push_back(line.substr(1, line.length()));
 	}
@@ -35,7 +39,7 @@ void Interpreter::readLine(std::string line)
 	}
 	if (line.find(":") != std::string::npos) {
 		std::string label = line.substr(1, line.length());
-		labels[label] = lineCounter + 1;
+		labels[label] = currentLine + 1;
 	}
 	if (line.find("$") != std::string::npos) {
 		std::string var1 = line.substr(1, line.length());
@@ -70,7 +74,7 @@ void Interpreter::readLine(std::string line)
 
 		}
 	}
-	lineCounter++;
+	currentLine++;
 }
 
 std::string Interpreter::add(std::string firstValue, std::string secondValue) {
@@ -134,8 +138,66 @@ void Interpreter::getLines(std::string value) {
 	while (stream.good()) {
 		std::getline(stream, line, '\n');
 		if (!line.empty()) {
-			commands.push_back(line);
+			_commands.push_back(line);
 		}
 	}
 }
 
+bool Interpreter::get_end()
+{
+	return _end;
+}
+
+void Interpreter::set_end() {
+	_end = true;
+}
+
+void Interpreter::checkLabelDefinitions() {
+	while (currentLine < _commands.size()) {
+		std::string line = _commands[currentLine];
+		++currentLine;
+		if (!line.empty()) {
+			if (line.find(":") != std::string::npos) {
+
+				/*
+
+				:label Label definition.
+				Beschouw de tekst na de dubbele punt tot het einde van
+				de regel als een label-naam, en onthoud die,
+				samen met de volgende regelpositie, zodat je later naar die regel kunt springen
+
+				*/
+			}
+		}
+	}
+}
+
+void Interpreter::RunNextLine() {
+	std::string value = _commands[currentLine];
+	++currentLine;
+	readLine(value);
+}
+
+std::vector<std::string> Interpreter::get_lineCommands() {
+	return _commands;
+}
+
+int Interpreter::get_currentLineCommand() {
+	return currentLine;
+}
+
+void Interpreter::set_lineCommands(std::vector<std::string> value) {
+	_commands = value;
+}
+
+std::string Interpreter::get_last() {
+	return "";
+}
+
+std::string Interpreter::GetVariable(std::string keyValue) {
+	return "";
+}
+
+void Interpreter::SetVariable(std::string keyValue, std::string value) {
+
+}
