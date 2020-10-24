@@ -1,7 +1,7 @@
 #include "Interpreter.h"
 
 Interpreter::Interpreter() {
-	curl_handler = std::make_unique<CurlHandler>();
+	curl_handler = std::make_shared<CurlHandler>();
 	stack = std::vector<std::string>();
 	map = std::map<std::string, std::string>();
 	labels = std::map<std::string, std::string>();

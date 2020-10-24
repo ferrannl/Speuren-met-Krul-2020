@@ -1,11 +1,11 @@
 #pragma once
-#include "CurlHandler.cpp"
 #include <string>
 #include <vector>
 #include <list>
 #include <map>
 #include <sstream>
 #include <iostream>
+#include "CurlHandler.h"
 
 class Interpreter {
 public:
@@ -15,7 +15,7 @@ public:
 	//constructor
 	Interpreter();
 
-	std::unique_ptr<CurlHandler> curl_handler;
+	std::shared_ptr<CurlHandler> curl_handler;
 
 	int currentLine;
 	//3.1.1 Values & Types

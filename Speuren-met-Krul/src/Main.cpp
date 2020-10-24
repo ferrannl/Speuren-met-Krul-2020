@@ -2,7 +2,6 @@
 #include <string>
 #include <curl/curl.h>
 #include <sstream>
-#include "CurlHandler.h"
 #include "Interpreter.h"
 
 int main(int argc, char* argv[])
