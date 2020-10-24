@@ -3,6 +3,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <utility>  
 #include <sstream>
 #include <iostream>
 #include "CurlHandler.h"
@@ -70,11 +71,10 @@ public:
 	std::map<std::string, std::string> labels;
 
 private:
-	bool get_end();
 	bool _end;
 	std::vector<std::string> _commands;
 	void checkLabelDefinitions();
+	void addLabelDefinition(std::string value);
 	std::vector<std::string> get_lineCommands();
 	void set_lineCommands(std::vector<std::string> value);
-	std::string get_last();
 };

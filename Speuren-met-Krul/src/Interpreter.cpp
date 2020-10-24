@@ -20,10 +20,10 @@ void Interpreter::readLine(std::string line)
 		return;
 	}
 	if (line.find("\\") != std::string::npos) {
-		stack.push_back(line.substr(1, line.length()));
+		stack.push_back(line.substr(1, line.length() - 1));
 	}
 	if (line.find("=") != std::string::npos) {
-		std::string value = line.substr(1, line.length());
+		std::string value = line.substr(1, line.length() - 1);
 		map[value] = stack.back();
 	}
 	if (line.find("dup") != std::string::npos) {
@@ -39,11 +39,11 @@ void Interpreter::readLine(std::string line)
 		}
 	}
 	if (line.find(":") != std::string::npos) {
-		std::string label = line.substr(1, line.length());
+		std::string label = line.substr(1, line.length() - 1);
 		labels[label] = currentLine + 1;
 	}
 	if (line.find("$") != std::string::npos) {
-		std::string var1 = line.substr(1, line.length());
+		std::string var1 = line.substr(1, line.length() - 1);
 		std::string var2 = map[var1];
 		stack.push_back(var2);
 	}
@@ -60,7 +60,7 @@ void Interpreter::readLine(std::string line)
 		stack.push_back(decrement(var));
 	}
 	if (line.find(">") != std::string::npos) {
-		std::string label = line.substr(1, line.length());
+		std::string label = line.substr(1, line.length() - 1);
 		std::string var = labels[label];
 		stack.push_back(var);
 	}
@@ -158,16 +158,9 @@ void Interpreter::getNewLines(const char* filename) {
 	RunLines();
 }
 
-bool Interpreter::get_end()
-{
-	return _end;
-}
-
 void Interpreter::set_end() {
 	_end = true;
 }
-
-
 
 void Interpreter::checkLabelDefinitions() {
 	while (currentLine < _commands.size()) {
@@ -175,17 +168,22 @@ void Interpreter::checkLabelDefinitions() {
 		++currentLine;
 		if (!line.empty()) {
 			if (line.find(":") != std::string::npos) {
-
+				addLabelDefinition(line);
 				/*
-
 				:label Label definition.
 				Beschouw de tekst na de dubbele punt tot het einde van
 				de regel als een label-naam, en onthoud die,
 				samen met de volgende regelpositie, zodat je later naar die regel kunt springen
-
 				*/
 			}
 		}
+	}
+}
+
+void Interpreter::addLabelDefinition(std::string value) {
+	std::string label = value.substr(1, value.length() - 1);
+	if (labels[label].empty()) {
+		labels.insert(std::pair<std::string, std::string>(label, std::to_string(currentLine)));
 	}
 }
 
@@ -204,10 +202,10 @@ void Interpreter::RunLines() {
 	while (get_lineCommands().size() > currentLine) {
 		RunNextLine();
 	}
-	std::string result = get_last();
-	std::cout << result << std::endl;
-	if (!get_end()) {
-		//
+	std::string lastLine = stack.back();
+	std::cout << lastLine << std::endl;
+	if (_end == false) {
+		getNewLines(lastLine.c_str());
 	}
 	else {
 		std::cout << "Einde" << std::endl;
@@ -217,16 +215,3 @@ void Interpreter::RunLines() {
 void Interpreter::set_lineCommands(std::vector<std::string> value) {
 	_commands = value;
 }
-
-std::string Interpreter::get_last() {
-	return "";
-}
-
-std::string Interpreter::GetVariable(std::string keyValue) {
-	return "";
-}
-
-void Interpreter::SetVariable(std::string keyValue, std::string value) {
-
-}
-
