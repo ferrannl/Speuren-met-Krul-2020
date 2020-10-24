@@ -1,9 +1,11 @@
 #pragma once
+#include "CurlHandler.cpp"
 #include <string>
 #include <vector>
 #include <list>
 #include <map>
 #include <sstream>
+#include <iostream>
 
 class Interpreter {
 public:
@@ -12,6 +14,8 @@ public:
 
 	//constructor
 	Interpreter();
+
+	std::unique_ptr<CurlHandler> curl_handler;
 
 	int currentLine;
 	//3.1.1 Values & Types
@@ -49,9 +53,11 @@ public:
 
 
 	std::string GetVariable(std::string keyValue);
-
 	void SetVariable(std::string keyValue, std::string value);
+	void getNewLines(const char* filename);
 
+	void RunNextLine();
+	void RunLines();
 	//3.1.4 Tests & Jumps
 
 	//3.1.5 Functies
@@ -68,9 +74,7 @@ private:
 	bool _end;
 	std::vector<std::string> _commands;
 	void checkLabelDefinitions();
-	void RunNextLine();
 	std::vector<std::string> get_lineCommands();
-	int get_currentLineCommand();
 	void set_lineCommands(std::vector<std::string> value);
 	std::string get_last();
 };

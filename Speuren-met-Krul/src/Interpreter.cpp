@@ -1,6 +1,7 @@
 #include "Interpreter.h"
 
 Interpreter::Interpreter() {
+	curl_handler = std::make_unique<CurlHandler>();
 	stack = std::vector<std::string>();
 	map = std::map<std::string, std::string>();
 	labels = std::map<std::string, std::string>();
@@ -143,6 +144,20 @@ void Interpreter::getLines(std::string value) {
 	}
 }
 
+void Interpreter::getNewLines(const char* filename) {
+	_commands = {};
+	std::string readBuffer = curl_handler->GetTextFile(filename);
+	std::stringstream stream(readBuffer);
+	while (stream.good()) {
+		std::string line;
+		std::getline(stream, line, '\n');
+		std::cout << line << std::endl;
+		_commands.push_back(line);
+	}
+	set_lineCommands(_commands);
+	RunLines();
+}
+
 bool Interpreter::get_end()
 {
 	return _end;
@@ -151,6 +166,8 @@ bool Interpreter::get_end()
 void Interpreter::set_end() {
 	_end = true;
 }
+
+
 
 void Interpreter::checkLabelDefinitions() {
 	while (currentLine < _commands.size()) {
@@ -182,8 +199,19 @@ std::vector<std::string> Interpreter::get_lineCommands() {
 	return _commands;
 }
 
-int Interpreter::get_currentLineCommand() {
-	return currentLine;
+void Interpreter::RunLines() {
+	checkLabelDefinitions();
+	while (get_lineCommands().size() > currentLine) {
+		RunNextLine();
+	}
+	std::string result = get_last();
+	std::cout << result << std::endl;
+	if (!get_end()) {
+		//
+	}
+	else {
+		std::cout << "Einde" << std::endl;
+	}
 }
 
 void Interpreter::set_lineCommands(std::vector<std::string> value) {
@@ -201,3 +229,4 @@ std::string Interpreter::GetVariable(std::string keyValue) {
 void Interpreter::SetVariable(std::string keyValue, std::string value) {
 
 }
+
