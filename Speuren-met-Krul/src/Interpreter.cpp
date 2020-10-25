@@ -18,6 +18,7 @@ Interpreter::Interpreter() {
 void Interpreter::readLine(std::string line)
 {
 	if (line.empty()) {
+		++currentLine;
 		return;
 	}
 	if (line.find("\\") != std::string::npos) {
