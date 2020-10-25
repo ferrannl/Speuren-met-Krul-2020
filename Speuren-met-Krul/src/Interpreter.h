@@ -48,8 +48,10 @@ public:
 	std::string rotate(std::string value);
 	std::string newline(std::string value);
 
+	void Gto();
+
 	bool is_number(std::string s);
-	void getLines(std::string value);
+	void getLines(const char* value);
 	void set_end();
 
 
@@ -57,7 +59,7 @@ public:
 	void SetVariable(std::string keyValue, std::string value);
 	void getNewLines(const char* filename);
 
-	void RunNextLine();
+	void RunNext();
 	void RunLines();
 	//3.1.4 Tests & Jumps
 
@@ -67,8 +69,9 @@ public:
 
 	//The stack(list) that holds the retrieved values from the curl website thingy
 	std::vector<std::string> stack;
-	std::map<std::string, std::string> map;
-	std::map<std::string, std::string> labels;
+	std::vector<std::string> callStack;
+	std::map<std::string, std::string> variables;
+	std::map<std::string, int> labels;
 
 private:
 	bool _end;

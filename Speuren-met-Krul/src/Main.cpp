@@ -6,17 +6,17 @@
 
 int main(int argc, char* argv[])
 {
-	const char startUrl[] = "start.txt";
 	auto curl_interpreter = std::make_unique<Interpreter>();
-
-	std::string readBuffer = curl_interpreter->curl_handler->GetTextFile(startUrl);
-	std::stringstream stream(readBuffer);
-	curl_interpreter->getLines(readBuffer);
-	while (stream.good()) {
-		std::string line;
-		std::getline(stream, line, '\n');
-		std::cout << line << std::endl;
-		curl_interpreter->readLine(line);
-	}
+	const char startUrl[] = "start.txt";
+	curl_interpreter->getNewLines(startUrl);
+	//std::string readBuffer = curl_interpreter->curl_handler->GetTextFile(startUrl);
+	//std::stringstream stream(readBuffer);
+	//curl_interpreter->getLines(readBuffer);
+	//while (stream.good()) {
+	//	std::string line;
+	//	std::getline(stream, line, '\n');
+	//	std::cout << line << std::endl;
+	//	curl_interpreter->readLine(line);
+	//}
 	return 0;
 }

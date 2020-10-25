@@ -3,9 +3,10 @@
 Interpreter::Interpreter() {
 	curl_handler = std::make_shared<CurlHandler>();
 	stack = std::vector<std::string>();
-	map = std::map<std::string, std::string>();
-	labels = std::map<std::string, std::string>();
+	callStack = std::vector<std::string>();
 	_commands = std::vector<std::string>();
+	labels = std::map<std::string, int>();
+	variables = std::map<std::string, std::string>();
 	currentLine = 0;
 	_end = false;
 }
@@ -24,7 +25,8 @@ void Interpreter::readLine(std::string line)
 	}
 	if (line.find("=") != std::string::npos) {
 		std::string value = line.substr(1, line.length() - 1);
-		map[value] = stack.back();
+		variables[value] = stack.back();
+		stack.pop_back();
 	}
 	if (line.find("dup") != std::string::npos) {
 		stack.push_back(duplicate(stack.back()));
@@ -40,11 +42,11 @@ void Interpreter::readLine(std::string line)
 	}
 	if (line.find(":") != std::string::npos) {
 		std::string label = line.substr(1, line.length() - 1);
-		labels[label] = currentLine + 1;
+		labels[label] = currentLine;
 	}
 	if (line.find("$") != std::string::npos) {
 		std::string var1 = line.substr(1, line.length() - 1);
-		std::string var2 = map[var1];
+		std::string var2 = variables[var1];
 		stack.push_back(var2);
 	}
 	if (line.find("cat") != std::string::npos) {
@@ -61,19 +63,70 @@ void Interpreter::readLine(std::string line)
 	}
 	if (line.find(">") != std::string::npos) {
 		std::string label = line.substr(1, line.length() - 1);
-		std::string var = labels[label];
-		stack.push_back(var);
+		stack.push_back(label);
 	}
 	if (line.find("gne") != std::string::npos) {
-		std::string labelWaarde = stack.back();
+		std::string labelValue = stack.back();
 		stack.pop_back();
 		std::string var2 = stack.back();
 		stack.pop_back();
 		std::string var1 = stack.back();
 		stack.pop_back();
 		if (std::stoi(var1) != std::stoi(var2)) {
-
+			currentLine = (labels[labelValue]);
 		}
+	}
+	if (line.find("glt") == 0) {
+		std::string labelValue = stack.back();
+		stack.pop_back();
+		std::string var2 = stack.back();
+		stack.pop_back();
+		std::string var1 = stack.back();
+		stack.pop_back();
+		if (std::stoi(var1) < std::stoi(var2)) {
+			currentLine = (labels[labelValue]);
+		}
+	}
+	if (line.compare("gle") == 0) {
+		std::string labelValue = stack.back();
+		stack.pop_back();
+		std::string var2 = stack.back();
+		stack.pop_back();
+		std::string var1 = stack.back();
+		stack.pop_back();
+		if (std::stoi(var1) <= std::stoi(var2)) {
+			currentLine = (labels[labelValue]);
+		}
+	}
+	if (line.find("ggt") == 0) {
+		std::string labelValue = stack.back();
+		stack.pop_back();
+		std::string var2 = stack.back();
+		stack.pop_back();
+		std::string var1 = stack.back();
+		stack.pop_back();
+		if (std::stoi(var1) > std::stoi(var2)) {
+			currentLine = (labels[labelValue]);
+		}
+	}
+	if (line.find("gge") == 0) {
+		std::string labelValue = stack.back();
+		stack.pop_back();
+		std::string var2 = stack.back();
+		stack.pop_back();
+		std::string var1 = stack.back();
+		stack.pop_back();
+		if (std::stoi(var1) >= std::stoi(var2)) {
+			currentLine = (labels[labelValue]);
+		}
+	}
+	if (line.find("fun") == 0) {
+		callStack.push_back(std::to_string(currentLine));
+		Gto();
+	}
+	if (line.find("ret") == 0) {
+		currentLine = std::stoi(callStack.back());
+		callStack.pop_back();
 	}
 	currentLine++;
 }
@@ -127,21 +180,16 @@ std::string Interpreter::duplicate(std::string value) {
 	return value;
 }
 
+void Interpreter::Gto() {
+	std::string labelValue = stack.back();
+	stack.pop_back();
+	currentLine = (labels[labelValue]);
+}
+
 bool Interpreter::is_number(std::string s)
 {
 	return !s.empty() && std::find_if(s.begin(),
 		s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
-}
-
-void Interpreter::getLines(std::string value) {
-	std::stringstream stream(value);
-	std::string line;
-	while (stream.good()) {
-		std::getline(stream, line, '\n');
-		if (!line.empty()) {
-			_commands.push_back(line);
-		}
-	}
 }
 
 void Interpreter::getNewLines(const char* filename) {
@@ -178,18 +226,19 @@ void Interpreter::checkLabelDefinitions() {
 			}
 		}
 	}
+	currentLine = 0;
 }
 
 void Interpreter::addLabelDefinition(std::string value) {
 	std::string label = value.substr(1, value.length() - 1);
-	if (labels[label].empty()) {
-		labels.insert(std::pair<std::string, std::string>(label, std::to_string(currentLine)));
+	if (std::to_string(labels[label]).empty()) {
+		labels.insert(std::pair<std::string, int>(label, currentLine));
 	}
 }
 
-void Interpreter::RunNextLine() {
+void Interpreter::RunNext() {
 	std::string value = _commands[currentLine];
-	++currentLine;
+	//++currentLine;
 	readLine(value);
 }
 
@@ -199,8 +248,8 @@ std::vector<std::string> Interpreter::get_lineCommands() {
 
 void Interpreter::RunLines() {
 	checkLabelDefinitions();
-	while (get_lineCommands().size() > currentLine) {
-		RunNextLine();
+	while (_commands.size() > currentLine) {
+		RunNext();
 	}
 	std::string lastLine = stack.back();
 	std::cout << lastLine << std::endl;
@@ -208,7 +257,22 @@ void Interpreter::RunLines() {
 		getNewLines(lastLine.c_str());
 	}
 	else {
-		std::cout << "Einde" << std::endl;
+		std::cout << "Bob InterPolis, glashelder." << std::endl;
+	}
+}
+
+void Interpreter::getLines(const char* filename) {
+	std::string readBuffer = curl_handler->GetTextFile(filename);
+	std::stringstream stream(readBuffer);
+	std::string line;
+	while (stream.good()) {
+		std::string line;
+		std::getline(stream, line, '\n');
+		std::cout << line << std::endl;
+		readLine(line);
+		if (!line.empty()) {
+			_commands.push_back(line);
+		}
 	}
 }
 
