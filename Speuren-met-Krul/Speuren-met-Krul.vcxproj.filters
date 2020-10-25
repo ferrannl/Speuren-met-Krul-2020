@@ -37,6 +37,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt" />
+    <Text Include="src\Text Files\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt" />
+    <Text Include="src\Text Files\start.txt" />
   </ItemGroup>
 </Project>

@@ -255,10 +255,16 @@ void Interpreter::RunLines() {
 	std::string lastLine = stack.back();
 	std::cout << lastLine << std::endl;
 	if (_end == false) {
+		stack.clear();
+		labels.clear();
+		callStack.clear();
+		_commands.clear();
+		variables.clear();
+		currentLine = 0;
 		getNewLines(lastLine.c_str());
 	}
 	else {
-		std::cout << "Bob InterPolis, glashelder." << std::endl;
+		std::cout << "Bob Polis, glashelder." << std::endl;
 	}
 }
 
