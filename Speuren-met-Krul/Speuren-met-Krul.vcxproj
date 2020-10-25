@@ -30,6 +30,9 @@
     <ClInclude Include="src\CurlHandler.h" />
     <ClInclude Include="src\Interpreter.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

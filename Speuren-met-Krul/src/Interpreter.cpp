@@ -121,6 +121,10 @@ void Interpreter::readLine(std::string line)
 			currentLine = (labels[labelValue]);
 		}
 	}
+	if (line.find("gto") == 0) {
+		Gto();
+		return;
+	}
 	if (line.find("fun") == 0) {
 		callStack.push_back(std::to_string(currentLine));
 		Gto();
@@ -232,7 +236,7 @@ void Interpreter::checkLabelDefinitions() {
 
 void Interpreter::addLabelDefinition(std::string value) {
 	std::string label = value.substr(1, value.length() - 1);
-	if (std::to_string(labels[label]).empty()) {
+	if (labels.count(label) == 0) {
 		labels.insert(std::pair<std::string, int>(label, currentLine));
 	}
 }
@@ -241,10 +245,6 @@ void Interpreter::RunNext() {
 	std::string value = _commands[currentLine];
 	//++currentLine;
 	readLine(value);
-}
-
-std::vector<std::string> Interpreter::get_lineCommands() {
-	return _commands;
 }
 
 void Interpreter::RunLines() {
@@ -277,6 +277,9 @@ void Interpreter::getLines(const char* filename) {
 	}
 }
 
+std::vector<std::string> Interpreter::get_lineCommands() {
+	return _commands;
+}
 void Interpreter::set_lineCommands(std::vector<std::string> value) {
 	_commands = value;
 }

@@ -7,7 +7,9 @@
 int main(int argc, char* argv[])
 {
 	auto curl_interpreter = std::make_unique<Interpreter>();
-	const char startUrl[] = "start.txt";
+	//const char startUrl[] = "start.txt";
+	const char startUrl[] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt";
+
 	curl_interpreter->getNewLines(startUrl);
 	//std::string readBuffer = curl_interpreter->curl_handler->GetTextFile(startUrl);
 	//std::stringstream stream(readBuffer);
