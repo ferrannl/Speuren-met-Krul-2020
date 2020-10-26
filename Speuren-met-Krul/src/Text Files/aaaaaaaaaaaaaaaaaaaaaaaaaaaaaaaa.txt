@@ -43,7 +43,7 @@ div
 $b
 mul
 ret
-:main  (ga hier heen bij de eerste goto, of de line er na.. idk)
+:main  (ga hier heen bij de eerste goto, of de line er na.. idk) (volgensmij naar de volgende line)
 214
 68
 >lcm

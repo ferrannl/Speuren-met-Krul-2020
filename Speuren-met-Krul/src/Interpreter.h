@@ -40,13 +40,13 @@ public:
 
 	//3.1.3 String operaties
 	std::string duplicate(std::string value);
-	std::string reverse(std::string value);
-	std::string substring(std::string to, std::string from, std::string value);
-	std::string index(std::string index, std::string value);
-	std::string concat(std::string firstValue, std::string secondValue);
-	std::string length(std::string value);
-	std::string rotate(std::string value);
-	std::string newline(std::string value);
+	//std::string reverse(std::string value);
+	//std::string substring(std::string to, std::string from, std::string value);
+	//std::string index(std::string index, std::string value);
+	//std::string concat(std::string firstValue, std::string secondValue);
+	//std::string length(std::string value);
+	//std::string rotate(std::string value);
+	//std::string newline(std::string value);
 
 	void Gto();
 
@@ -69,7 +69,7 @@ public:
 
 	//The stack(list) that holds the retrieved values from the curl website thingy
 	std::vector<std::string> stack;
-	std::vector<std::string> callStack;
+	std::vector<int> callStack;
 	std::map<std::string, std::string> variables;
 	std::map<std::string, int> labels;
 
@@ -80,4 +80,5 @@ private:
 	void addLabelDefinition(std::string value);
 	std::vector<std::string> get_lineCommands();
 	void set_lineCommands(std::vector<std::string> value);
+	std::string ROT13(std::string source);
 };

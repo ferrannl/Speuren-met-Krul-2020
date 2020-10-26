@@ -218,16 +218,16 @@ void Interpreter::readLine(std::string line)
 		stack.push_back(value + '\n');
 	}
 	currentLine++;
-	//if (!stack.empty()) {
-	//	int i = 0;
-	//	while (stack.size() > i) {
-	//		std::cout << stack.at(i) << std::endl;
-	//		i++;
-	//	}
-	//}
-	//else {
-	//	std::cout << " " << std::endl;
-	//}
+	if (!stack.empty()) {
+		int i = 0;
+		while (stack.size() > i) {
+			std::cout << stack.at(i) << std::endl;
+			i++;
+		}
+	}
+	else {
+		std::cout << " " << std::endl;
+	}
 }
 
 std::string Interpreter::add(std::string firstValue, std::string secondValue) {
