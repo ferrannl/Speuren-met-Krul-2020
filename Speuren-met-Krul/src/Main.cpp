@@ -3,7 +3,6 @@
 #include <curl/curl.h>
 #include <sstream>
 #include "Interpreter.h"
-#include <crtdbg.h>
 
 int main(int argc, char* argv[])
 {
@@ -13,6 +12,5 @@ int main(int argc, char* argv[])
 	//const char startUrl[] = "4812-9-6727.txt";
 	const char startUrl[] = "AasHgsho.txt";
 	curl_interpreter->getNewLines(startUrl);
-	_CrtDumpMemoryLeaks();
 	return 0;
 }

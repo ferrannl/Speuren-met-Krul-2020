@@ -19,7 +19,7 @@ Interpreter::Interpreter() {
 void Interpreter::readLine(std::string line)
 {
 	totalCounter++;
-	if (totalCounter >= 1270) {
+	if (totalCounter >= 1310) {
 		std::cout << "billy" << std::endl;
 	}
 	//1378
@@ -240,6 +240,7 @@ void Interpreter::readLine(std::string line)
 		stack.push_back(value + '\n');
 	}
 	currentLine++;
+	//std::cout << line << std::endl;
 }
 
 std::string Interpreter::add(std::string firstValue, std::string secondValue) {

@@ -93,5 +93,3 @@ idx
 fun
 \txt
 cat
-
-Bananen hangen in warme landen aan de bananenboom
