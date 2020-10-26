@@ -12,7 +12,7 @@ class Interpreter {
 public:
 
 	void readLine(std::string line);
-
+	int totalCounter;
 	//constructor
 	Interpreter();
 
@@ -49,16 +49,10 @@ public:
 	//std::string newline(std::string value);
 
 	void Gto();
-
 	bool is_number(std::string s);
 	void getLines(const char* value);
 	void set_end();
-
-
-	std::string GetVariable(std::string keyValue);
-	void SetVariable(std::string keyValue, std::string value);
 	void getNewLines(const char* filename);
-
 	void RunNext();
 	void RunLines();
 	//3.1.4 Tests & Jumps

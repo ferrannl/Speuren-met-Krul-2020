@@ -9,6 +9,7 @@ Interpreter::Interpreter() {
 	variables = std::map<std::string, std::string>();
 	currentLine = 0;
 	_end = false;
+	totalCounter = 0;
 }
 
 // push_back	=		waarde toevoegen aan einde
@@ -17,12 +18,32 @@ Interpreter::Interpreter() {
 
 void Interpreter::readLine(std::string line)
 {
+	totalCounter++;
+	if (totalCounter >= 1270) {
+		std::cout << "billy" << std::endl;
+	}
+	//1378
+	//std::cout << totalCounter << std::endl;
 	if (line.empty()) {
 		++currentLine;
 		return;
 	}
 	if (line.find("\\") != std::string::npos) {
 		stack.push_back(line.substr(1, line.length() - 1));
+	}
+	if (line.find("add") != std::string::npos) {
+		std::string value1 = stack.back();
+		stack.pop_back();
+		std::string value2 = stack.back();
+		stack.pop_back();
+		stack.push_back(add(value1, value2));
+	}
+	if (line.find("sub") != std::string::npos) {
+		std::string value1 = stack.back();
+		stack.pop_back();
+		std::string value2 = stack.back();
+		stack.pop_back();
+		stack.push_back(subtract(value1, value2));
 	}
 	if (line.find("=") != std::string::npos) {
 		std::string value = line.substr(1, line.length() - 1);
@@ -33,9 +54,9 @@ void Interpreter::readLine(std::string line)
 		stack.push_back(duplicate(stack.back()));
 	}
 	if (line.find("mul") != std::string::npos) {
-		std::string value2 = stack.back();
-		stack.pop_back();
 		std::string value1 = stack.back();
+		stack.pop_back();
+		std::string value2 = stack.back();
 		stack.pop_back();
 		stack.push_back(multiply(value1, value2));
 	}
@@ -55,7 +76,7 @@ void Interpreter::readLine(std::string line)
 			return;
 		}
 		else {
-			stack.push_back(divide(value2, value1));
+			stack.push_back(divide(value1, value2));
 		}
 	}
 	if (line.find("abs") != std::string::npos) {
@@ -114,7 +135,7 @@ void Interpreter::readLine(std::string line)
 		stack.pop_back();
 		std::string var1 = stack.back();
 		stack.pop_back();
-		if (std::stoi(var1) != std::stoi(var2)) {
+		if (var1 != var2) {
 			currentLine = (labels[labelValue]);
 			return;
 		}
@@ -128,8 +149,8 @@ void Interpreter::readLine(std::string line)
 		stack.pop_back();
 		if (std::stoi(var1) < std::stoi(var2)) {
 			currentLine = (labels[labelValue]);
+			return;
 		}
-		return;
 	}
 	if (line.compare("gle") == 0) {
 		std::string labelValue = stack.back();
@@ -179,6 +200,7 @@ void Interpreter::readLine(std::string line)
 	if (line.find("ret") == 0) {
 		currentLine = callStack.back();
 		callStack.pop_back();
+		return;
 	}
 	if (line.find("rev") != std::string::npos) {
 		std::string value = stack.back();
@@ -218,16 +240,6 @@ void Interpreter::readLine(std::string line)
 		stack.push_back(value + '\n');
 	}
 	currentLine++;
-	//if (!stack.empty()) {
-	//	int i = 0;
-	//	while (stack.size() > i) {
-	//		std::cout << stack.at(i) << std::endl;
-	//		i++;
-	//	}
-	//}
-	//else {
-	//	std::cout << " " << std::endl;
-	//}
 }
 
 std::string Interpreter::add(std::string firstValue, std::string secondValue) {
@@ -246,8 +258,8 @@ std::string Interpreter::multiply(std::string firstValue, std::string secondValu
 }
 
 std::string Interpreter::divide(std::string firstValue, std::string secondValue) {
-	int result = (std::stoi(secondValue) / std::stoi(firstValue));
-	return std::to_string(result);
+
+	return std::to_string(std::stoi(secondValue) / std::stoi(firstValue));
 }
 
 std::string Interpreter::modulo(std::string firstValue, std::string secondValue) {
@@ -353,7 +365,6 @@ void Interpreter::RunNext() {
 	readLine(value);
 }
 
-
 void Interpreter::getLines(const char* filename) {
 	std::string readBuffer = curl_handler->GetTextFile(filename);
 	std::stringstream stream(readBuffer);
@@ -368,7 +379,6 @@ void Interpreter::getLines(const char* filename) {
 		}
 	}
 }
-
 
 void Interpreter::RunLines() {
 	checkLabelDefinitions();
@@ -394,6 +404,7 @@ void Interpreter::RunLines() {
 std::vector<std::string> Interpreter::get_lineCommands() {
 	return _commands;
 }
+
 void Interpreter::set_lineCommands(std::vector<std::string> value) {
 	_commands = value;
 }

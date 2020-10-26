@@ -32,7 +32,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\Text Files\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt" />
+    <Text Include="src\Text Files\Bososen-hosgen-in-warme-losden-aos-de-bososenboom.txt" />
     <Text Include="src\Text Files\start.txt" />
+    <Text Include="src\Text Files\4812-9-6727.txt" />
+    <Text Include="src\Text Files\AasHgsho.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
