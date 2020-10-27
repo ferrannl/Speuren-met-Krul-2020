@@ -42,5 +42,7 @@
     <Text Include="src\Text Files\4812-9-6727.txt" />
     <Text Include="src\Text Files\AasHgsho.txt" />
     <Text Include="src\Text Files\Bososen-hosgen-in-warme-losden-aos-de-bososenboom.txt" />
+    <Text Include="src\Text Files\we-zijn-er-bijna.txt" />
+    <Text Include="src\Text Files\ninaf-zvabe-fjn-pcc1.txt" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,6 @@
 #include "Interpreter.h"
+#define IsBigLetter(a) a >= 'A' && a <= 'Z'
+#define IsSmallLetter(a) a >= 'a' && a <= 'z'
 
 Interpreter::Interpreter() {
 	curl_handler = std::make_shared<CurlHandler>();
@@ -19,17 +21,14 @@ Interpreter::Interpreter() {
 void Interpreter::readLine(std::string line)
 {
 	totalCounter++;
-	if (totalCounter >= 1310) {
-		std::cout << "billy" << std::endl;
-	}
-	//1378
-	//std::cout << totalCounter << std::endl;
 	if (line.empty()) {
 		++currentLine;
 		return;
 	}
 	if (line.find("\\") != std::string::npos) {
 		stack.push_back(line.substr(1, line.length() - 1));
+		++currentLine;
+		return;
 	}
 	if (line.find("add") != std::string::npos) {
 		std::string value1 = stack.back();
@@ -59,6 +58,11 @@ void Interpreter::readLine(std::string line)
 		std::string value2 = stack.back();
 		stack.pop_back();
 		stack.push_back(multiply(value1, value2));
+	}
+	if (line.find("neg") != std::string::npos) {
+		std::string value = stack.back();
+		stack.pop_back();
+		stack.push_back(negate(value));
 	}
 	if (line.find("mod") != std::string::npos) {
 		std::string value1 = stack.back();
@@ -95,13 +99,7 @@ void Interpreter::readLine(std::string line)
 		stack.push_back(increment(value));
 	}
 	if (is_number(line)) {
-		int integer = std::stoi(line);
-		if (integer < 0) {
-			stack.push_back(negate(line));
-		}
-		else {
-			stack.push_back(line);
-		}
+		stack.push_back(line);
 	}
 	if (line.find(":") != std::string::npos) {
 		std::string label = line.substr(1, line.length() - 1);
@@ -239,8 +237,10 @@ void Interpreter::readLine(std::string line)
 		stack.pop_back();
 		stack.push_back(value + '\n');
 	}
+	if (line.find("end") != std::string::npos) {
+		_end = true;
+	}
 	currentLine++;
-	//std::cout << line << std::endl;
 }
 
 std::string Interpreter::add(std::string firstValue, std::string secondValue) {
@@ -294,19 +294,17 @@ std::string Interpreter::duplicate(std::string value) {
 
 std::string Interpreter::ROT13(std::string source)
 {
-	std::string transformed;
-	for (size_t i = 0; i < source.size(); ++i) {
-		if (isalpha(source[i])) {
-			if ((tolower(source[i]) - 'a') < 14)
-				transformed.append(1, source[i] + 13);
-			else
-				transformed.append(1, source[i] - 13);
-		}
-		else {
-			transformed.append(1, source[i]);
-		}
+	std::string result;
+	for (char a : source)
+	{
+		if (IsBigLetter(a))
+			result += ((int)a - (int)'A' + 13) % 26 + 'A';
+		else if (IsSmallLetter(a))
+			result += ((int)a - (int)'a' + 13) % 26 + 'a';
+		else
+			result += a;
 	}
-	return transformed;
+	return result;
 }
 
 void Interpreter::Gto() {
