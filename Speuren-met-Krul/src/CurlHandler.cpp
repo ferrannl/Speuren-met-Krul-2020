@@ -12,6 +12,7 @@ std::string CurlHandler::GetTextFile(std::string filename) {
 	std::string result;
 	CURL* curl;
 	CURLcode res;
+	//const
 	const std::string baseUrl = "https://www.swiftcoder.nl/cpp1/";
 	std::string fullUrl = baseUrl + filename;
 	curl_global_init(CURL_GLOBAL_DEFAULT);
