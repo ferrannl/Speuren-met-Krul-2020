@@ -3,7 +3,7 @@
 #define IsSmallLetter(a) a >= 'a' && a <= 'z'
 
 Interpreter::Interpreter() {
-	curl_handler = std::make_shared<CurlHandler>();
+	curl_handler = std::unique_ptr<CurlHandler>();
 	stack = std::vector<std::string>();
 	callStack = std::vector<int>();
 	_commands = std::vector<std::string>();
@@ -319,7 +319,7 @@ bool Interpreter::is_number(std::string s)
 		s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
 }
 
-void Interpreter::getNewLines(const char* filename) {
+void Interpreter::getNewLines(std::string filename) {
 	_commands = {};
 	std::string readBuffer = curl_handler->GetTextFile(filename);
 	std::stringstream stream(readBuffer);
@@ -364,7 +364,7 @@ void Interpreter::RunNext() {
 	readLine(value);
 }
 
-void Interpreter::getLines(const char* filename) {
+void Interpreter::getLines(std::string filename) {
 	std::string readBuffer = curl_handler->GetTextFile(filename);
 	std::stringstream stream(readBuffer);
 	std::string line;
@@ -396,6 +396,11 @@ void Interpreter::RunLines() {
 		getNewLines(lastLine.c_str());
 	}
 	else {
+		stack.clear();
+		labels.clear();
+		callStack.clear();
+		_commands.clear();
+		variables.clear();
 		std::cout << "Bob Polis, glashelder." << std::endl;
 	}
 }

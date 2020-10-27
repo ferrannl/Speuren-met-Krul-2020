@@ -8,19 +8,17 @@ static size_t my_write(void* buffer, size_t size, size_t nmemb, void* param)
 	return totalsize;
 }
 
-std::string CurlHandler::GetTextFile(const char* filename) {
+std::string CurlHandler::GetTextFile(std::string filename) {
 	std::string result;
 	CURL* curl;
 	CURLcode res;
-	const char baseUrl[] = "https://www.swiftcoder.nl/cpp1/";
-	char* fullUrl = new char[std::strlen(baseUrl) + std::strlen(filename) + 1];
-	std::strcpy(fullUrl, baseUrl);
-	std::strcat(fullUrl, filename);
+	const std::string baseUrl = "https://www.swiftcoder.nl/cpp1/";
+	std::string fullUrl = baseUrl + filename;
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 
 	curl = curl_easy_init();
 	if (curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, fullUrl);
+		curl_easy_setopt(curl, CURLOPT_URL, fullUrl.c_str());
 		/* Define our callback to get called when there's data to be written */
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, my_write);
 		/* Set a pointer to our struct to pass to the callback */
