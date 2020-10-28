@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Speuren-met-Krul", "Speuren-met-Krul\Speuren-met-Krul.vcxproj", "{36723F4C-55F1-41C6-811B-7E49E63A8458}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36723F4C-55F1-41C6-811B-7E49E63A8458}.Debug|x64.ActiveCfg = Debug|x64
+		{36723F4C-55F1-41C6-811B-7E49E63A8458}.Debug|x64.Build.0 = Debug|x64
+		{36723F4C-55F1-41C6-811B-7E49E63A8458}.Debug|x86.ActiveCfg = Debug|Win32
+		{36723F4C-55F1-41C6-811B-7E49E63A8458}.Debug|x86.Build.0 = Debug|Win32
+		{36723F4C-55F1-41C6-811B-7E49E63A8458}.Release|x64.ActiveCfg = Release|x64
+		{36723F4C-55F1-41C6-811B-7E49E63A8458}.Release|x64.Build.0 = Release|x64
+		{36723F4C-55F1-41C6-811B-7E49E63A8458}.Release|x86.ActiveCfg = Release|Win32
+		{36723F4C-55F1-41C6-811B-7E49E63A8458}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {873B6E7A-E4FD-42B0-AFC9-654CDA147E97}
+	EndGlobalSection
+EndGlobal
