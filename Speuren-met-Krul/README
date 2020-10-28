@@ -13,6 +13,8 @@
 
 Ferran-Hendriks - 2130858
 
+Run program in Debug configuration and x86 (Win32) platform.
+
 Here's how I've got curl to work with Visual Studio 2019 16.7.2:
 
 Download curl zip package from https://curl.haxx.se/download.html (latest verified is: https://curl.haxx.se/download/curl-7.72.0.zip)
