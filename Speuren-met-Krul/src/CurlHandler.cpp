@@ -29,9 +29,6 @@ std::string CurlHandler::GetTextFile(std::string filename) {
 
 		res = curl_easy_perform(curl.get());
 
-		/* always cleanup */
-		curl_easy_cleanup(curl.get());
-
 		if (CURLE_OK != res) {
 			/* we failed */
 			std::cerr << "curl told us " << res << '\n';
