@@ -1,4 +1,5 @@
 CPPLS1-Eindopdracht
+
 Ergens, op een geheime plek op het web, staat een bericht dat je moet zien te vinden.
 Je krijgt een start-URL, waar je via een HTTP GET-request een stukje platte tekst
 van ophaalt.
